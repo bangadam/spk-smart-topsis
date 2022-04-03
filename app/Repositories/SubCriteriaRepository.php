@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class SubCriteriaRepository
  * @package App\Repositories
- * @version March 13, 2022, 4:17 am UTC
+ * @version April 2, 2022, 2:41 pm UTC
 */
 
 class SubCriteriaRepository extends BaseRepository
@@ -19,7 +19,7 @@ class SubCriteriaRepository extends BaseRepository
     protected $fieldSearchable = [
         'name',
         'weight',
-        'type'
+        'criteria_id'
     ];
 
     /**

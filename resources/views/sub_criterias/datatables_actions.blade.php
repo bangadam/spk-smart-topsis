@@ -1,9 +1,9 @@
-{!! Form::open(['route' => ['sub-criterias.destroy', $id], 'method' => 'delete']) !!}
+{!! Form::open(['route' => ['subCriterias.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
-    <a href="{{ route('sub-criterias.show', $id) }}" class='btn btn-default btn-xs'>
+    <a href="{{ route('subCriterias.show', $id) }}" class='btn btn-default btn-xs'>
         <i class="fa fa-eye"></i>
     </a>
-    <a href="{{ route('sub-criterias.edit', $id) }}" class='btn btn-default btn-xs'>
+    <a href="{{ route('subCriterias.edit', $id) }}" class='btn btn-default btn-xs'>
         <i class="fa fa-edit"></i>
     </a>
     {!! Form::button('<i class="fa fa-trash"></i>', [

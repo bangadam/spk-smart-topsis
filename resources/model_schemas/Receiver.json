@@ -13,7 +13,7 @@
     },
     {
         "name": "population_assesment_id",
-        "dbType": "integer:unsigned:foreign,population_assesments,id,cascade",
+        "dbType": "integer:unsigned",
         "htmlType": "",
         "validations": "",
         "searchable": false,
@@ -37,7 +37,7 @@
     },
     {
         "name": "wave_id",
-        "dbType": "integer:unsigned:foreign,waves,id,cascade",
+        "dbType": "integer:unsigned",
         "htmlType": "number",
         "validations": "required",
         "searchable": false,

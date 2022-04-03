@@ -58,7 +58,7 @@ class SubCriteriaController extends AppBaseController
 
         Flash::success('Sub Criteria saved successfully.');
 
-        return redirect(route('sub-criterias.index'));
+        return redirect(route('subCriterias.index'));
     }
 
     /**
@@ -75,7 +75,7 @@ class SubCriteriaController extends AppBaseController
         if (empty($subCriteria)) {
             Flash::error('Sub Criteria not found');
 
-            return redirect(route('sub-criterias.index'));
+            return redirect(route('subCriterias.index'));
         }
 
         return view('sub_criterias.show')->with('subCriteria', $subCriteria);
@@ -95,7 +95,7 @@ class SubCriteriaController extends AppBaseController
         if (empty($subCriteria)) {
             Flash::error('Sub Criteria not found');
 
-            return redirect(route('sub-criterias.index'));
+            return redirect(route('subCriterias.index'));
         }
 
         return view('sub_criterias.edit')->with('subCriteria', $subCriteria);
@@ -116,14 +116,14 @@ class SubCriteriaController extends AppBaseController
         if (empty($subCriteria)) {
             Flash::error('Sub Criteria not found');
 
-            return redirect(route('sub-criterias.index'));
+            return redirect(route('subCriterias.index'));
         }
 
         $subCriteria = $this->subCriteriaRepository->update($request->all(), $id);
 
         Flash::success('Sub Criteria updated successfully.');
 
-        return redirect(route('sub-criterias.index'));
+        return redirect(route('subCriterias.index'));
     }
 
     /**
@@ -140,13 +140,13 @@ class SubCriteriaController extends AppBaseController
         if (empty($subCriteria)) {
             Flash::error('Sub Criteria not found');
 
-            return redirect(route('sub-criterias.index'));
+            return redirect(route('subCriterias.index'));
         }
 
         $this->subCriteriaRepository->delete($id);
 
         Flash::success('Sub Criteria deleted successfully.');
 
-        return redirect(route('sub-criterias.index'));
+        return redirect(route('subCriterias.index'));
     }
 }

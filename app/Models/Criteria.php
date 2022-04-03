@@ -22,13 +22,14 @@ class Criteria extends Model
     use HasFactory;
 
     public $table = 'criterias';
-    
+
 
     protected $dates = ['deleted_at'];
 
 
 
     public $fillable = [
+        'code',
         'name',
         'weight',
         'type'
@@ -58,5 +59,8 @@ class Criteria extends Model
         'type' => 'required'
     ];
 
-    
+    public function subCriteria()
+    {
+        return $this->hasMany(SubCriteria::class);
+    }
 }

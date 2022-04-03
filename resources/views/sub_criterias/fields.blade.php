@@ -16,8 +16,8 @@
     {!! Form::number('weight', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Type Field -->
+<!-- Criteria Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('type', 'Type:') !!}
-    {!! Form::select('type', ['benefit' => 'benefit', 'cost' => 'cost'], null, ['class' => 'form-control custom-select']) !!}
+    {!! Form::label('criteria_id', 'Criteria Id:') !!}
+    {!! Form::select('criteria_id', ], null, ['class' => 'form-control custom-select']) !!}
 </div>

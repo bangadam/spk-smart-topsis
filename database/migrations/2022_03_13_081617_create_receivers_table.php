@@ -21,8 +21,6 @@ class CreateReceiversTable extends Migration
             $table->integer('wave_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('population_assesment_id')->references('id')->on('population_assesments')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('wave_id')->references('id')->on('waves')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

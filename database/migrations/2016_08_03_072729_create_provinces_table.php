@@ -4,9 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubCriteriasTable extends Migration
+class CreateProvincesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -14,14 +13,12 @@ class CreateSubCriteriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_criterias', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('code');
-            $table->string('name');
-            $table->string('weight');
-            $table->string('type');
+        Schema::create(config('laravolt.indonesia.table_prefix').'provinces', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->char('code', 2)->unique();
+            $table->string('name', 255);
+            $table->text('meta')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -32,6 +29,6 @@ class CreateSubCriteriasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sub_criterias');
+        Schema::drop(config('laravolt.indonesia.table_prefix').'provinces');
     }
 }

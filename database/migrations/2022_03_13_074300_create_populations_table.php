@@ -16,6 +16,7 @@ class CreatePopulationsTable extends Migration
     {
         Schema::create('populations', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('card_id_number', 255)->unique();
             $table->string('name');
             $table->string('phone_number');

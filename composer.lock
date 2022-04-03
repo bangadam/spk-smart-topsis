@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24b08b3f87d7e0ec0b9ccb69e48fcdfa",
+    "content-hash": "387430e5af002e30ed88dcfbe498a611",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2047,16 +2047,16 @@
         },
         {
             "name": "laravolt/indonesia",
-            "version": "v0.31",
+            "version": "v0.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravolt/indonesia.git",
-                "reference": "b8a1cbe3e94b96b279cb1f03a3e872bb78d454d2"
+                "reference": "51fbb482537ef06b836fe32470ff5d6f8d678be2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravolt/indonesia/zipball/b8a1cbe3e94b96b279cb1f03a3e872bb78d454d2",
-                "reference": "b8a1cbe3e94b96b279cb1f03a3e872bb78d454d2",
+                "url": "https://api.github.com/repos/laravolt/indonesia/zipball/51fbb482537ef06b836fe32470ff5d6f8d678be2",
+                "reference": "51fbb482537ef06b836fe32470ff5d6f8d678be2",
                 "shasum": ""
             },
             "require": {
@@ -2064,7 +2064,7 @@
                 "php": "^7.3|^8.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^6.0",
+                "orchestra/testbench": "^6.0|^7.0",
                 "php-coveralls/php-coveralls": "^2.1",
                 "phpunit/phpunit": "^9.0"
             },
@@ -2123,9 +2123,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravolt/indonesia/issues",
-                "source": "https://github.com/laravolt/indonesia/tree/v0.31"
+                "source": "https://github.com/laravolt/indonesia/tree/v0.32"
             },
-            "time": "2022-02-09T23:32:13+00:00"
+            "time": "2022-04-01T06:39:19+00:00"
         },
         {
             "name": "league/commonmark",

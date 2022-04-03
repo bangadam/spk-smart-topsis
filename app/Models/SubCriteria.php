@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class SubCriteria
  * @package App\Models
- * @version March 13, 2022, 4:17 am UTC
+ * @version April 2, 2022, 2:41 pm UTC
  *
  * @property string $name
- * @property string $weight
- * @property string $type
+ * @property integer $weight
+ * @property integer $criteria_id
  */
 class SubCriteria extends Model
 {
@@ -31,7 +31,7 @@ class SubCriteria extends Model
     public $fillable = [
         'name',
         'weight',
-        'type'
+        'criteria_id'
     ];
 
     /**
@@ -43,8 +43,8 @@ class SubCriteria extends Model
         'id' => 'integer',
         'code' => 'string',
         'name' => 'string',
-        'weight' => 'string',
-        'type' => 'string'
+        'weight' => 'integer',
+        'criteria_id' => 'integer'
     ];
 
     /**
@@ -55,7 +55,7 @@ class SubCriteria extends Model
     public static $rules = [
         'name' => 'required',
         'weight' => 'required',
-        'type' => 'required'
+        'criteria_id' => 'required'
     ];
 
     

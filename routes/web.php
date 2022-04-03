@@ -22,7 +22,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('criterias', App\Http\Controllers\CriteriaController::class);
 Route::resource('sub-criterias', App\Http\Controllers\SubCriteriaController::class);
-Route::resource('surveyors', App\Http\Controllers\SurveyorController::class);
 
 
 Route::resource('waves', App\Http\Controllers\WaveController::class);
@@ -41,3 +40,12 @@ Route::resource('populationAssesments', App\Http\Controllers\PopulationAssesment
 
 
 Route::resource('receivers', App\Http\Controllers\ReceiverController::class);
+
+
+
+
+
+
+
+
+Route::resource('subCriterias', App\Http\Controllers\SubCriteriaController::class);

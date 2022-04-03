@@ -18,13 +18,6 @@
 
 
 
-<li class="nav-item">
-    <a href="{{ route('surveyors.index') }}"
-       class="nav-link {{ Request::is('surveyors*') ? 'active' : '' }}">
-        <p>Surveyors</p>
-    </a>
-</li>
-
 
 <li class="nav-item">
     <a href="{{ route('waves.index') }}"

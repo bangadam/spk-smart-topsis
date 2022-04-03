@@ -27,7 +27,7 @@ class Population extends Model
     use HasFactory;
 
     public $table = 'populations';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -77,5 +77,8 @@ class Population extends Model
         'zip_code' => 'required'
     ];
 
-    
+    public function populationAssesment()
+    {
+        return $this->hasMany(PopulationAssesment::class);
+    }
 }

@@ -13,7 +13,7 @@
     },
     {
         "name": "sub_criteria_id",
-        "dbType": "integer:unsigned:foreign,sub_criterias,id,cascade",
+        "dbType": "integer:unsigned",
         "htmlType": "select",
         "validations": "required",
         "searchable": true,
@@ -25,7 +25,7 @@
     },
     {
         "name": "population_id",
-        "dbType": "integer:unsigned:foreign,populations,id,cascade",
+        "dbType": "integer:unsigned",
         "htmlType": "select",
         "validations": "required",
         "searchable": true,

@@ -13,7 +13,7 @@
     },
     {
         "name": "user_id",
-        "dbType": "biginteger:unsigned:foreign,users,id,cascade",
+        "dbType": "biginteger:unsigned",
         "htmlType": "",
         "validations": "",
         "searchable": false,

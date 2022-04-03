@@ -17,7 +17,7 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'sub-criterias.store']) !!}
+            {!! Form::open(['route' => 'subCriterias.store']) !!}
 
             <div class="card-body">
 
@@ -29,7 +29,7 @@
 
             <div class="card-footer">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('sub-criterias.index') }}" class="btn btn-default">Cancel</a>
+                <a href="{{ route('subCriterias.index') }}" class="btn btn-default">Cancel</a>
             </div>
 
             {!! Form::close() !!}

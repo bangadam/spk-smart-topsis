@@ -10,10 +10,10 @@
     <p>{{ $subCriteria->weight }}</p>
 </div>
 
-<!-- Type Field -->
+<!-- Criteria Id Field -->
 <div class="col-sm-12">
-    {!! Form::label('type', 'Type:') !!}
-    <p>{{ $subCriteria->type }}</p>
+    {!! Form::label('criteria_id', 'Criteria Id:') !!}
+    <p>{{ $subCriteria->criteria_id }}</p>
 </div>
 
 <!-- Created At Field -->

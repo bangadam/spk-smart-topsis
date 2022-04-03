@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePopulationAssesmentsTable extends Migration
+class CreateSubCriteriasTable extends Migration
 {
 
     /**
@@ -14,11 +14,12 @@ class CreatePopulationAssesmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('population_assesments', function (Blueprint $table) {
+        Schema::create('sub_criterias', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('sub_criteria_id')->unsigned();
-            $table->integer('population_id')->unsigned();
-            $table->integer('value');
+            $table->string('code');
+            $table->string('name');
+            $table->integer('weight');
+            $table->integer('criteria_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +32,6 @@ class CreatePopulationAssesmentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('population_assesments');
+        Schema::drop('sub_criterias');
     }
 }

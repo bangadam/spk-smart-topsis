@@ -67,8 +67,7 @@ class SubCriteriaDataTable extends DataTable
         return [
             'code' => ['searchable' => false],
             'name',
-            'weight',
-            'type'
+            'weight'
         ];
     }
 
