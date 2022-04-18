@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class SubCriteria
  * @package App\Models
- * @version April 2, 2022, 2:41 pm UTC
+ * @version April 12, 2022, 3:57 pm WIB
  *
  * @property string $name
  * @property integer $weight
@@ -22,7 +22,7 @@ class SubCriteria extends Model
     use HasFactory;
 
     public $table = 'sub_criterias';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -58,5 +58,8 @@ class SubCriteria extends Model
         'criteria_id' => 'required'
     ];
 
-    
+    public function criteria()
+    {
+        return $this->belongsTo(Criteria::class);
+    }
 }

@@ -25,7 +25,7 @@ class SubCriteriaFactory extends Factory
             'code' => $this->faker->word,
         'name' => $this->faker->word,
         'weight' => $this->faker->randomDigitNotNull,
-        'criteria_id' => $this->faker->randomDigitNotNull,
+        'criteria_id' => $this->faker->word,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];

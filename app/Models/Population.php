@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Population
  * @package App\Models
- * @version March 13, 2022, 7:43 am UTC
+ * @version April 12, 2022, 4:01 pm WIB
  *
  * @property string $card_id_number
+ * @property string $family_card_id
  * @property string $name
  * @property string $phone_number
  * @property string $gender
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $address
  * @property integer $village_id
  * @property string $zip_code
+ * @property integer $created_by
  */
 class Population extends Model
 {
@@ -34,14 +36,17 @@ class Population extends Model
 
 
     public $fillable = [
+        'user_id',
         'card_id_number',
+        'family_card_id',
         'name',
         'phone_number',
         'gender',
         'birth_date',
         'address',
         'village_id',
-        'zip_code'
+        'zip_code',
+        'created_by'
     ];
 
     /**
@@ -52,13 +57,15 @@ class Population extends Model
     protected $casts = [
         'id' => 'integer',
         'card_id_number' => 'string',
+        'family_card_id' => 'string',
         'name' => 'string',
         'phone_number' => 'string',
         'gender' => 'string',
         'birth_date' => 'date',
         'address' => 'string',
         'village_id' => 'integer',
-        'zip_code' => 'string'
+        'zip_code' => 'string',
+        'created_by' => 'integer'
     ];
 
     /**
@@ -67,7 +74,8 @@ class Population extends Model
      * @var array
      */
     public static $rules = [
-        'card_id_number' => 'required',
+        'card_id_number' => 'required|unique:populations',
+        'family_card_id' => 'required',
         'name' => 'required',
         'phone_number' => 'required',
         'gender' => 'required',
@@ -77,7 +85,20 @@ class Population extends Model
         'zip_code' => 'required'
     ];
 
-    public function populationAssesment()
+
+    const GENDER = [
+        'male' => "Pria",
+        "female" => 'Wanita'
+    ];
+
+    // get gender
+    public static function getGenderList()
+    {
+        return self::GENDER;
+    }
+
+    // population assesment
+    public function population_assesments()
     {
         return $this->hasMany(PopulationAssesment::class);
     }

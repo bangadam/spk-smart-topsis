@@ -9,6 +9,10 @@ use App\Http\Requests\UpdatePopulationRequest;
 use App\Repositories\PopulationRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Criteria;
+use App\Models\Population;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Response;
 
 class PopulationController extends AppBaseController
@@ -40,7 +44,10 @@ class PopulationController extends AppBaseController
      */
     public function create()
     {
-        return view('populations.create');
+        $data['gender'] = Population::getGenderList();
+        $data['provinces'] = \Indonesia::allProvinces()->pluck('name', 'id');
+
+        return view('populations.create', $data);
     }
 
     /**
@@ -52,13 +59,47 @@ class PopulationController extends AppBaseController
      */
     public function store(CreatePopulationRequest $request)
     {
-        $input = $request->all();
+       try {
+            DB::beginTransaction();
 
-        $population = $this->populationRepository->create($input);
+            $input = $request->all();
 
-        Flash::success('Population saved successfully.');
+            // create user population
+            $user = User::createFromPopulation($input);
 
-        return redirect(route('populations.index'));
+            $input['user_id'] = $user->id;
+            $input['created_by'] = auth()->user()->id;
+
+            $population = $this->populationRepository->create($input);
+
+            // create population assesment
+            $population_assesment = $population->population_assesments()->create([
+                'date' => now(),
+                'created_by' => auth()->user()->id,
+            ]);
+
+            // create population assessment detail
+            $criterias = Criteria::all();
+
+            foreach ($criterias as $key => $criteria) {
+                ++$key;
+                $population_assesment_detail = $population_assesment->populationAssesmentDetail()->create([
+                    'criteria_id' => $criteria->id,
+                    'value' => $input['C'.$key],
+                    'created_by' => auth()->user()->id,
+                ]);
+            }
+
+            Flash::success('Berhasil menyimpan data');
+            DB::commit();
+
+            return redirect(route('populations.index'));
+       } catch (\Throwable $th) {
+           dd($th);
+            DB::rollback();
+            Flash::error('Gagal menyimpan data');
+            return redirect()->back()->withInput();
+       }
     }
 
     /**
@@ -98,7 +139,9 @@ class PopulationController extends AppBaseController
             return redirect(route('populations.index'));
         }
 
-        return view('populations.edit')->with('population', $population);
+        $data['population'] = $population;
+        $data['gender'] = Population::getGenderList();
+        return view('populations.edit', $data);
     }
 
     /**

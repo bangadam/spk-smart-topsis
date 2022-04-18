@@ -49,7 +49,7 @@
     },
     {
         "name": "criteria_id",
-        "dbType": "integer:unsigned",
+        "dbType": "biginteger:unsigned",
         "htmlType": "select",
         "validations": "required",
         "searchable": true,

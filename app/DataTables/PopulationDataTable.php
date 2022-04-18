@@ -29,7 +29,14 @@ class PopulationDataTable extends DataTable
      */
     public function query(Population $model)
     {
-        return $model->newQuery();
+        $query = $model->newQuery();
+
+        // if role is surveyor
+        if (auth()->user()->hasRole('surveyor')) {
+            $query = $query->where('created_by', auth()->user()->id);
+        }
+
+        return $query;
     }
 
     /**
@@ -65,14 +72,10 @@ class PopulationDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'card_id_number',
-            'name',
-            'phone_number',
-            'gender',
-            'birth_date',
-            'address',
-            'village_id',
-            'zip_code'
+            'card_id_number' => ['title' => 'Nomor KTP'],
+            'name'          => ['title' => 'Nama'],
+            'phone_number' => ['title' => 'Nomor Telepon'],
+            'gender' => ['title' => 'Jenis Kelamin'],
         ];
     }
 

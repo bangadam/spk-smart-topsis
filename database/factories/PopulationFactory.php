@@ -23,6 +23,7 @@ class PopulationFactory extends Factory
     {
         return [
             'card_id_number' => $this->faker->word,
+        'family_card_id' => $this->faker->word,
         'name' => $this->faker->word,
         'phone_number' => $this->faker->word,
         'gender' => $this->faker->word,
@@ -30,6 +31,7 @@ class PopulationFactory extends Factory
         'address' => $this->faker->text,
         'village_id' => $this->faker->word,
         'zip_code' => $this->faker->word,
+        'created_by' => $this->faker->word,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];

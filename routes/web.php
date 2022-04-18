@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DssController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,32 +21,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('criterias', App\Http\Controllers\CriteriaController::class);
 Route::resource('sub-criterias', App\Http\Controllers\SubCriteriaController::class);
-
-
-Route::resource('waves', App\Http\Controllers\WaveController::class);
-
-
-
-
-
-
-
-
-Route::resource('populations', App\Http\Controllers\PopulationController::class);
-
-
 Route::resource('populationAssesments', App\Http\Controllers\PopulationAssesmentController::class);
+Route::resource('dashboards', App\Http\Controllers\DashboardController::class);
 
+/** Dss */
+Route::resource('dss', DssController::class);
 
-Route::resource('receivers', App\Http\Controllers\ReceiverController::class);
-
-
-
-
-
-
-
-
+Route::resource('criterias', App\Http\Controllers\CriteriaController::class);
 Route::resource('subCriterias', App\Http\Controllers\SubCriteriaController::class);
+Route::resource('populations', App\Http\Controllers\PopulationController::class);

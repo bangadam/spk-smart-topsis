@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Criteria
  * @package App\Models
- * @version March 13, 2022, 3:58 am UTC
+ * @version April 12, 2022, 3:55 pm WIB
  *
  * @property string $name
  * @property string $weight
@@ -29,7 +29,6 @@ class Criteria extends Model
 
 
     public $fillable = [
-        'code',
         'name',
         'weight',
         'type'
@@ -59,6 +58,31 @@ class Criteria extends Model
         'type' => 'required'
     ];
 
+    // create criteria form generator
+    public static function criteriaFormGenerator()
+    {
+        $html = '';
+        $criterias = Criteria::all();
+
+        foreach ($criterias as $criteria) {
+            $html .= '<div class="form-group col-sm-12">';
+            $html .= '<label for="' . $criteria->code . '">' . $criteria->name . '</label>';
+            $html .= '<select name="' . $criteria->code . '" id="' . $criteria->code . '" class="form-control custom-select">';
+            $html .= '<option disabled selected>Pilih Kondisi ' . $criteria->name . '</option>';
+
+            // append sub criteria
+            foreach ($criteria->subCriteria as $sub_criteria) {
+                $html .= '<option value="' . $sub_criteria->weight . '">' . $sub_criteria->name . '</option>';
+            }
+
+            $html .= '</select>';
+            $html .= '</div>';
+        }
+
+        return $html;
+    }
+
+    // get sub criteria
     public function subCriteria()
     {
         return $this->hasMany(SubCriteria::class);

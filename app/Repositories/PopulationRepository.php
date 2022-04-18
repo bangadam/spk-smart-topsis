@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class PopulationRepository
  * @package App\Repositories
- * @version March 13, 2022, 7:43 am UTC
+ * @version April 12, 2022, 4:01 pm WIB
 */
 
 class PopulationRepository extends BaseRepository

@@ -24,6 +24,18 @@
         "inView": true
     },
     {
+        "name": "family_card_id",
+        "dbType": "string,255",
+        "htmlType": "text",
+        "validations": "required",
+        "searchable": false,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": false,
+        "inView": true
+    },
+    {
         "name": "name",
         "dbType": "string",
         "htmlType": "text",
@@ -106,6 +118,18 @@
         "inForm": true,
         "inIndex": true,
         "inView": true
+    },
+    {
+        "name": "created_by",
+        "dbType": "biginteger:unsigned",
+        "htmlType": "text",
+        "validations": "",
+        "searchable": false,
+        "fillable": true,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
     },
     {
         "name": "created_at",

@@ -4,6 +4,12 @@
     <p>{{ $population->card_id_number }}</p>
 </div>
 
+<!-- Family Card Id Field -->
+<div class="col-sm-12">
+    {!! Form::label('family_card_id', 'Family Card Id:') !!}
+    <p>{{ $population->family_card_id }}</p>
+</div>
+
 <!-- Name Field -->
 <div class="col-sm-12">
     {!! Form::label('name', 'Name:') !!}

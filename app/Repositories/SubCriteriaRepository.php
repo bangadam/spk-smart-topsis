@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class SubCriteriaRepository
  * @package App\Repositories
- * @version April 2, 2022, 2:41 pm UTC
+ * @version April 12, 2022, 3:57 pm WIB
 */
 
 class SubCriteriaRepository extends BaseRepository
