@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             SurveyorSeeder::class,
             PopulationSeeder::class,
             CriteriaSeeder::class,
+            PeriodSeeder::class,
         ]);
 
         // Secondary

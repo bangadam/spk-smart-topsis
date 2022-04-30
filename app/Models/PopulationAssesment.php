@@ -13,7 +13,8 @@ class PopulationAssesment extends Model
     protected $fillable = [
         'population_id',
         'date',
-        'is_process'
+        'is_process',
+        'period_id',
     ];
 
     // population_assesment_detail

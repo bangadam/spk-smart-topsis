@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateSubCriteriaRequest;
 use App\Repositories\SubCriteriaRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Criteria;
 use Response;
 
 class SubCriteriaController extends AppBaseController
@@ -40,7 +41,8 @@ class SubCriteriaController extends AppBaseController
      */
     public function create()
     {
-        return view('sub_criterias.create');
+        $data['criterias'] = Criteria::pluck('name', 'id');
+        return view('sub_criterias.create', $data);
     }
 
     /**
@@ -90,15 +92,16 @@ class SubCriteriaController extends AppBaseController
      */
     public function edit($id)
     {
-        $subCriteria = $this->subCriteriaRepository->find($id);
+        $data['subCriteria'] = $this->subCriteriaRepository->find($id);
+        $data['criterias'] = Criteria::pluck('name', 'id');
 
-        if (empty($subCriteria)) {
+        if (empty($data['subCriteria'])) {
             Flash::error('Sub Criteria not found');
 
             return redirect(route('subCriterias.index'));
         }
 
-        return view('sub_criterias.edit')->with('subCriteria', $subCriteria);
+        return view('sub_criterias.edit', $data);
     }
 
     /**

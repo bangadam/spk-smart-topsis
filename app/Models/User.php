@@ -77,4 +77,61 @@ class User extends Authenticatable
 
         return $user;
     }
+
+    // get photo from account
+    public function getPhotoAttribute()
+    {
+        return asset('storage/'. $this->account->photo);
+    }
+
+    // get full name from account
+    public function getFullNameAttribute()
+    {
+        return $this->account->full_name;
+    }
+
+    // get village id from account
+    public function getVillageIdAttribute()
+    {
+        return $this->account->village_id;
+    }
+
+    // get address from account
+    public function getAddressAttribute()
+    {
+        return $this->account->address;
+    }
+
+    // get phone from account
+    public function getPhoneAttribute()
+    {
+        return $this->account->phone;
+    }
+
+    // get province id by village id
+    public function getProvinceIdAttribute()
+    {
+        $village = \Indonesia::findVillage($this->account->village_id, ['province']);
+        return $village->province->id ?? null;
+    }
+
+    // get city id by village id
+    public function getCityIdAttribute()
+    {
+        $village = \Indonesia::findVillage($this->account->village_id, ['city']);
+        return $village->city->id ?? null;
+    }
+
+    // get district id by village id
+    public function getDistrictIdAttribute()
+    {
+        $village = \Indonesia::findVillage($this->account->village_id, ['district']);
+        return $village->district->id ?? null;
+    }
+
+    // get role name
+    public function getRoleNameAttribute()
+    {
+        return $this->roles()->first()->name;
+    }
 }

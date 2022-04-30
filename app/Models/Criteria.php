@@ -87,4 +87,15 @@ class Criteria extends Model
     {
         return $this->hasMany(SubCriteria::class);
     }
+
+    // generate code on create
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function($model){
+            $last = self::count();
+            $model->code = 'C' . ($last + 1);
+        });
+    }
 }

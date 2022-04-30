@@ -39,4 +39,22 @@ class SubCriteriaRepository extends BaseRepository
     {
         return SubCriteria::class;
     }
+
+    // create sub criteria
+    public function create($request): bool
+    {
+        try {
+            foreach (range(1, $this->model::getMaxSubCriteria()) as $index) {
+                $this->model::create([
+                    'name' => $request['name'][$index],
+                    'weight' => $request['weight'][$index],
+                    'criteria_id' => $request['criteria_id'],
+                ]);
+            }
+
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
 }

@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // API Indonesia Region
 Route::group(['prefix' => 'indonesia'], function () {
+    Route::get('/provinces', [IndonesiaRegionController::class, 'getProvinces'])->name('api.indonesia.provinces');
     Route::get('/cities/{province_id}', [IndonesiaRegionController::class, 'getCities'])->name('api.indonesia.cities');
     Route::get('/districts/{city_id}', [IndonesiaRegionController::class, 'getDistricts'])->name('api.indonesia.districts');
     Route::get('/villages/{district_id}', [IndonesiaRegionController::class, 'getVillages'])->name('api.indonesia.villages');

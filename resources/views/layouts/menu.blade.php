@@ -27,6 +27,13 @@
                 <p>Sub Kriteria</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('periods.index') }}"
+            class="nav-link {{ Request::is('periods*') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Data Periode</p>
+            </a>
+        </li>
     </ul>
 </li>
 
@@ -38,11 +45,27 @@
 </li>
 @endif
 
+@if(auth()->user()->hasRole(['admin', 'surveyor']))
 <li class="nav-item">
     <a href="{{ route('populations.index') }}" class="nav-link {{ Request::is('populations*') ? 'active' : '' }}">
         <i class="far fa-users nav-icon"></i>
         <p>Penduduk</p>
     </a>
 </li>
+@endif
 
+@if(auth()->user()->hasRole(['receiver']))
+<li class="nav-item">
+    <a href="#!" class="nav-link {{ Request::is('populations*') ? 'active' : '' }}">
+        <i class="far fa-users nav-icon"></i>
+        <p>Riwayat Data</p>
+    </a>
+</li>
+@endif
 
+<li class="nav-item">
+    <a href="{{  route('profiles.index') }}" class="nav-link {{ Request::is('profiles*') ? 'active' : '' }}">
+        <i class="far fa-user nav-icon"></i>
+        <p>Identitas Diri</p>
+    </a>
+</li>
