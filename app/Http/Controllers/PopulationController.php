@@ -9,10 +9,13 @@ use App\Http\Requests\UpdatePopulationRequest;
 use App\Repositories\PopulationRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Imports\PopulationAssesmentImport;
 use App\Models\Criteria;
 use App\Models\Population;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Response;
 
 class PopulationController extends AppBaseController
@@ -95,7 +98,6 @@ class PopulationController extends AppBaseController
 
             return redirect(route('populations.index'));
        } catch (\Throwable $th) {
-           dd($th);
             DB::rollback();
             Flash::error('Gagal menyimpan data');
             return redirect()->back()->withInput();
@@ -191,5 +193,26 @@ class PopulationController extends AppBaseController
         Flash::success('Population deleted successfully.');
 
         return redirect(route('populations.index'));
+    }
+
+    public function import(Request $request)
+    {
+        try {
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+
+                Excel::queueImport(new PopulationAssesmentImport, $file);
+
+                Flash::success('Berhasil mengimport data');
+                return redirect(route('populations.index'));
+            }
+
+            Flash::error('File tidak boleh kosong');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            dd($th);
+            Flash::error('Gagal mengimport data');
+            return redirect()->back();
+        }
     }
 }

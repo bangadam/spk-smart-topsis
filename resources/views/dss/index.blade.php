@@ -25,7 +25,32 @@
 
         <div class="card">
             <div class="card-body p-2">
-                {{-- @include('populations.table') --}}
+                <div class="table-responsive">
+                    <table class="table table-borderd" id="table-report">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Judul</th>
+                                <th>Kuota</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Selesai</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($periods as $value)
+                                <tr>
+                                    <td>{{++$loop->index}}</td>
+                                    <td>{{$value->title}}</td>
+                                    <td>{{$value->quota}}</td>
+                                    <td>{{$value->start_date}}</td>
+                                    <td>{{$value->end_date}}</td>
+                                    <td>{{$value->status}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="card-footer clearfix">
                     <div class="float-right">
@@ -38,4 +63,23 @@
     </div>
 
 @endsection
+
+@push('third_party_stylesheets')
+    @include('layouts.datatables_css')
+@endpush
+
+@push('third_party_scripts')
+    @include('layouts.datatables_js')
+    <script>
+        $('#table-report').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    </script>
+@endpush
 

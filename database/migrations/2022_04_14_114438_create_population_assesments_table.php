@@ -20,6 +20,7 @@ class CreatePopulationAssesmentsTable extends Migration
             $table->unsignedBigInteger('created_by')->nullable();
             $table->boolean('is_process')->default(false);
             $table->unsignedBigInteger('period_id')->nullable();
+            $table->json('data')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

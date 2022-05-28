@@ -66,7 +66,10 @@ class User extends Authenticatable
         $user = new User();
         $user->name = $request->name;
         $user->password = bcrypt($request->family_card_id);
+        $user->email = $request->card_id_number;
         $user->save();
+
+        $user->assignRole('receiver');
 
         $account = new Account();
         $account->user_id = $user->id;

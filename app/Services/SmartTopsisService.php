@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Criteria;
+use App\Models\Period;
 use App\Models\Population;
 use App\Models\PopulationAssesment;
 use App\Models\SubCriteria;
@@ -37,10 +38,12 @@ class SmartTopsisService
      *
      * @return array
      */
-    public function getDataSamples()
+    public function getDataSamples($request)
     {
         $data = [];
-        $populations = Population::all();
+        $populations = Population::whereHas('population_assesments', function($query) use ($request) {
+            $query->where('period_id', $request->period_id);
+        })->get();
 
         foreach ($populations as $key => $value) {
             // get population assesment is not process
@@ -62,9 +65,9 @@ class SmartTopsisService
     }
 
     // get name only from datasample
-    public function getNameOnly()
+    public function getNameOnly($request)
     {
-        $data = $this->getDataSamples();
+        $data = $this->getDataSamples($request);
         $name = [];
 
         foreach ($data as $key => $value) {
@@ -114,7 +117,7 @@ class SmartTopsisService
     public static function verticalToHorizontal($vertical)
     {
         $horizontal = [];
-        $count = count($vertical) - 1;
+        $count = count($vertical[0]) - 1;
 
         foreach (range(0, $count) as $index) {
             // group by key
@@ -290,7 +293,6 @@ class SmartTopsisService
         foreach($result_normalized_weight as $key => $value) {
             $solusi_positif = 0;
             $solusi_negatif = 0;
-            // =SQRT((C$84-C70)^2+(D$84-D70)^2+(E$84-E70)^2+(F$84-F70)^2+(G$84-G70)^2)
             foreach($value as $key2 => $value2) {
                 $temp1 = $solutions[0][$key2];
                 $temp2 = $solutions[1][$key2];
@@ -325,7 +327,7 @@ class SmartTopsisService
      * @param alternatif_name
      * @return array
      */
-    public function getResultRanking($result_distance, $dataset)
+    public function getResultRanking($result_distance, $dataset, $period_id)
     {
         $nilai_v = [];
         $solusi_negatif = $result_distance['solusi_ideal_negatif'];
@@ -340,7 +342,8 @@ class SmartTopsisService
         foreach ($nilai_v as $key => $value) {
             $result_ranking[$key] = [
                 'nilai_v' => $value,
-                'nama_alternatif' => $dataset[$key]['name']
+                'nama_alternatif' => $dataset[$key]['name'],
+                'data' => json_encode($dataset[$key]),
             ];
         }
 
@@ -348,6 +351,17 @@ class SmartTopsisService
         usort($result_ranking, function($a, $b) {
             return $a['nilai_v'] < $b['nilai_v'];
         });
+
+        // quota
+        $quota = Period::find($period_id)->quota;
+        foreach ($result_ranking as $key => $value) {
+            $result_ranking[$key]['ranking'] = $key + 1;
+            if ($key < $quota) {
+                $result_ranking[$key]['status'] = 'Layak';
+            } else {
+                $result_ranking[$key]['status'] = 'Tidak Layak';
+            }
+        }
 
         return $result_ranking;
     }

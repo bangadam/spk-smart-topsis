@@ -28,8 +28,6 @@ class Period extends Model
 
     protected $dates = ['deleted_at'];
 
-
-
     public $fillable = [
         'title',
         'quota',

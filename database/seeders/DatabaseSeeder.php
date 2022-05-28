@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             AdminSeeder::class,
             SurveyorSeeder::class,
-            PopulationSeeder::class,
+            // PopulationSeeder::class,
             CriteriaSeeder::class,
             PeriodSeeder::class,
         ]);

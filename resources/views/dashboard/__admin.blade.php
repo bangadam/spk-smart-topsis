@@ -1,10 +1,10 @@
 <!-- Small boxes (Stat box) -->
 <div class="row">
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-6 col-6">
        <!-- small box -->
        <div class="small-box bg-info">
           <div class="inner">
-             <h3>150</h3>
+             <h3>{{$total_population}}</h3>
              <p>Data Penduduk</p>
           </div>
           <div class="icon">
@@ -14,11 +14,11 @@
        </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-6 col-6">
        <!-- small box -->
        <div class="small-box bg-success">
           <div class="inner">
-             <h3>53<sup style="font-size: 20px">%</sup></h3>
+             <h3>{{$total_received}}</h3>
              <p>Data Penerima</p>
           </div>
           <div class="icon">
@@ -31,7 +31,7 @@
  </div>
  <!-- /.row -->
  <!-- Main row -->
- <div class="row">
+ {{-- <div class="row">
     <!-- Left col -->
     <section class="col-lg-7 connectedSortable">
        <!--/.direct-chat -->
@@ -251,5 +251,5 @@
        <!-- /.card -->
     </section>
     <!-- right col -->
- </div>
+ </div> --}}
  <!-- /.row (main row) -->

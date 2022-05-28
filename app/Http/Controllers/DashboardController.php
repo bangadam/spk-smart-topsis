@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Population;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,7 +14,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $data['total_population'] = 0;
+        $data['total_received'] = 0;
+
+        if (auth()->user()->hasRole('admin')) {
+            $data['total_population'] = Population::count();
+        } else if (auth()->user()->hasRole('surveyor')) {
+            $data['total_population'] = Population::where('created_by', auth()->user()->id)->count();
+        }
+
+        return view('dashboard.index', $data);
     }
 
     /**

@@ -85,9 +85,6 @@
         </div>
 
         <div class="card">
-
-            {!! Form::open(['route' => 'dss.store']) !!}
-
             <div class="card-body">
 
                 <div class="row">
@@ -96,24 +93,22 @@
 
             </div>
 
-            <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('dss.index') }}" class="btn btn-default">Cancel</a>
-            </div>
-
-            {!! Form::close() !!}
-
         </div>
     </div>
 
 @endsection
 
 @push('third_party_scripts')
-    @include('layouts.datatables_js')
     <script>
         $(function () {
-            $('#table-dataset').DataTable()
-            $('#table-utility').DataTable()
+            $('#select-period').on('change', function () {
+                let period_id = $(this).val();
+                let url = `/backoffice/dss/next?period_id=${period_id}`;
+                let btn_ambil_dataset = $('#btn-ambil-dataset');
+
+                btn_ambil_dataset.attr('disabled', false);
+                btn_ambil_dataset.attr('href', url);
+            })
         })
     </script>
 @endpush

@@ -19,10 +19,10 @@ class PeriodSeeder extends Seeder
         foreach (range(1, 10) as $key => $value) {
             Period::create([
                 'title' => '2022/2023 - Gelombang ' . $value,
-                'quota' => $faker->numberBetween(1, 1000),
+                'quota' => $faker->numberBetween(75, 75),
                 'start_date' => $faker->dateTimeBetween('-1 years', '+1 years'),
                 'end_date' => $faker->dateTimeBetween('-1 years', '+1 years'),
-                'status' => $faker->randomElement(['done', 'ongoing', 'closed']),
+                'status' => $value == 10 ? 'ongoing' : 'closed',
             ]);
         }
     }

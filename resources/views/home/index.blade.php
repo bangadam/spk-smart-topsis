@@ -22,7 +22,7 @@
 <!-- Icons Grid-->
 <section class="features-icons bg-light" id="check-data">
     <div class="container">
-        {!! Form::open(['route' => 'dss.store']) !!}
+        {!! Form::open(['route' => 'check-receiver.bantuan', 'method' => 'POST']) !!}
         <div class="row">
             <div class="col-lg-12">
                 <div class=" text-center features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">

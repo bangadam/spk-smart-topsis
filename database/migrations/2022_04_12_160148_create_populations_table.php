@@ -18,12 +18,12 @@ class CreatePopulationsTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('user_id');
             $table->string('card_id_number', 255)->unique();
-            $table->string('family_card_id', 255);
-            $table->string('name');
-            $table->string('phone_number');
-            $table->string('gender');
-            $table->date('birth_date');
-            $table->text('address');
+            $table->string('family_card_id', 255)->nullable();
+            $table->string('name')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('gender')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->text('address')->nullable();
             $table->biginteger('village_id')->unsigned();
             $table->string('zip_code');
             $table->biginteger('created_by')->unsigned();

@@ -1,19 +1,13 @@
-<div class="form-group col-sm-6">
-    {!! Form::label('wave_name', 'Periode:') !!}
-    {!! Form::text('wave_name', null, ['class' => 'form-control', 'placeholder' => '2021/2022']) !!}
-</div>
-
-<div class="form-group col-sm-6">
-    {!! Form::label('wave_quota', 'Kuota :') !!}
-    {!! Form::number('wave_quota', null, ['class' => 'form-control', 'placeholder' => 100]) !!}
+<div class="form-group col-sm-12">
+    {!! Form::label('period_id', 'Pilih Periode proses:') !!}
+    {!! Form::select('period_id', $periods, null, ['class' => 'form-control', 'placeholder' => 'pilih', 'id' => 'select-period']) !!}
 </div>
 
 <div class="form-group col-sm-2">
-    {!! Form::button("Ambil dataset", ['class' => 'form-control btn btn-warning']) !!}
+    <a href="#!" id="btn-ambil-dataset" class="btn btn-warning" disabled>Ambil Dataset</a>
 </div>
 
-<div class="col-sm-12 mb-3">
-    {{-- table dataset --}}
+{{-- <div class="col-sm-12 mb-3">
     {!! Form::label('table_dataset', '1. Daftar Calon Penerima:') !!}
     <div class="table-responsive">
         <table class="table table-bordered" id="table-dataset">
@@ -171,9 +165,9 @@
 </div>
 
 <div class="col-sm-12 mb-3">
-    {!! Form::label('table-normalisasi-bobot', '5. Jarak antara nilai setiap alternatif:') !!}
+    {!! Form::label('table-jarak-alternatif', '5. Jarak antara nilai setiap alternatif:') !!}
     <div class="table-responsive">
-        <table class="table table-bordered" id="table-normalisasi-bobot">
+        <table class="table table-bordered" id="table-jarak-alternatif">
             <thead>
                 <tr>
                     <th>No</th>
@@ -238,4 +232,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</div> --}}

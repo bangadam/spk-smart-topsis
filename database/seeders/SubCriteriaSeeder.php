@@ -122,7 +122,7 @@ class SubCriteriaSeeder extends Seeder
                     'weight' => 80,
                 ],
                 [
-                    'name' => ' Positif Terjangkit',
+                    'name' => 'Positif Terjangkit',
                     'weight' => 100,
                 ],
             ],

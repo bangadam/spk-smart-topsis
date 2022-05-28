@@ -56,7 +56,7 @@
 
 @if(auth()->user()->hasRole(['receiver']))
 <li class="nav-item">
-    <a href="#!" class="nav-link {{ Request::is('populations*') ? 'active' : '' }}">
+    <a href="{{ route('riwayat-data.index') }}" class="nav-link {{ Request::is('riwayat-data*') ? 'active' : '' }}">
         <i class="far fa-users nav-icon"></i>
         <p>Riwayat Data</p>
     </a>
