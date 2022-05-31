@@ -35,6 +35,7 @@
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +47,11 @@
                                     <td>{{$value->start_date}}</td>
                                     <td>{{$value->end_date}}</td>
                                     <td>{{$value->status}}</td>
+                                    <td>
+                                        <a href="{{ route('dss.show', $value->id) }}" class="btn btn-primary btn-sm">
+                                            detail
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
