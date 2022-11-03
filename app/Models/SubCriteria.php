@@ -30,7 +30,9 @@ class SubCriteria extends Model
     public $fillable = [
         'name',
         'weight',
-        'criteria_id'
+        'criteria_id',
+        "min",
+        'max',
     ];
 
     /**

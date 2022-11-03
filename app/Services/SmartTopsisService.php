@@ -41,7 +41,7 @@ class SmartTopsisService
     public function getDataSamples($request)
     {
         $data = [];
-        $populations = Population::whereHas('population_assesments', function($query) use ($request) {
+        $populations = Population::whereHas('population_assesments', function ($query) use ($request) {
             $query->where('period_id', $request->period_id);
         })->get();
 
@@ -51,7 +51,6 @@ class SmartTopsisService
 
             // get population assesment detail
             $population_assesment_detail = $population_assesment->populationAssesmentDetail()->get();
-
             // add population assesment detail to data
             array_push($data, [
                 "population_id" => $value->id,
@@ -104,8 +103,16 @@ class SmartTopsisService
     {
         $min = min($weights);
         $max = max($weights);
+        $temp_1 = ($max - $current);
+        $temp_2 = ($max - $min);
 
-        $value = round(($max-$current) / ($max-$min), 3);
+        if ($temp_1 == 0 && $temp_2 == 0) {
+            $value = 0;
+        } else {
+            // with precision
+            $value = round($temp_1 / $temp_2, 3);
+        }
+
         return $value;
     }
 
@@ -163,8 +170,10 @@ class SmartTopsisService
         // get value column separate by row
         $criterias = Criteria::all();
         $column_separate_by_row = [];
-        for ($i=0; $i < count($criterias); $i++) {
-            array_push($column_separate_by_row, array_column($population_assesment_detail, $i)
+        for ($i = 0; $i < count($criterias); $i++) {
+            array_push(
+                $column_separate_by_row,
+                array_column($population_assesment_detail, $i)
             );
         }
 
@@ -173,8 +182,10 @@ class SmartTopsisService
         foreach ($dataset as $key => $value) {
             array_push($population_assesment_detail2, $value['population_assesment_detail']->pluck('value')->toArray());
         }
-        for ($i=0; $i < count($criterias); $i++) {
-            array_push($weights, array_column($population_assesment_detail2, $i)
+        for ($i = 0; $i < count($criterias); $i++) {
+            array_push(
+                $weights,
+                array_column($population_assesment_detail2, $i)
             );
         }
 
@@ -223,8 +234,12 @@ class SmartTopsisService
     {
         $resultNormalizedRoot = [];
         foreach ($utility as $key => $value) {
-            foreach($value as $key2 => $value2) {
-                $resultNormalizedRoot[$key][$key2] = round($value2 / $totalUtility[$key], 3);
+            foreach ($value as $key2 => $value2) {
+                if ($value == 0 || $totalUtility[$key] == 0) {
+                    $resultNormalizedRoot[$key][$key2] = 0;
+                } else {
+                    $resultNormalizedRoot[$key][$key2] = round($value2 / $totalUtility[$key], 3);
+                }
             }
         }
 
@@ -243,7 +258,7 @@ class SmartTopsisService
         $no = 1;
         foreach ($resultNormalizedRoot as $key => $value) {
             foreach ($value as $key2 => $value2) {
-                $resultNormalizedWeight[$key][$key2] = round($value2 * $normalizedWeight['C'.$no], 3);
+                $resultNormalizedWeight[$key][$key2] = round($value2 * $normalizedWeight['C' . $no], 3);
             }
             $no++;
         }
@@ -279,7 +294,7 @@ class SmartTopsisService
 
         $solutions = [];
         $count = count($resultSolution[0]);
-        foreach(range(0, $count-1) as $index) {
+        foreach (range(0, $count - 1) as $index) {
             $solutions[$index] = [];
             foreach ($resultSolution as $key => $value) {
                 $values = array_values($resultSolution[$key]);
@@ -290,10 +305,10 @@ class SmartTopsisService
 
         $data_solusi_ideal_positif = [];
         $data_solusi_ideal_negatif = [];
-        foreach($result_normalized_weight as $key => $value) {
+        foreach ($result_normalized_weight as $key => $value) {
             $solusi_positif = 0;
             $solusi_negatif = 0;
-            foreach($value as $key2 => $value2) {
+            foreach ($value as $key2 => $value2) {
                 $temp1 = $solutions[0][$key2];
                 $temp2 = $solutions[1][$key2];
 
@@ -305,13 +320,13 @@ class SmartTopsisService
                 $result2 = pow(($temp2 - $value2), 2);
                 $solusi_negatif += $result2;
             }
-            array_push($data_solusi_ideal_positif,sqrt($solusi_positif));
+            array_push($data_solusi_ideal_positif, sqrt($solusi_positif));
             array_push($data_solusi_ideal_negatif, sqrt($solusi_negatif));
         }
 
         // get D+ + D-
         $result_distance = [];
-        foreach(range(0, count($data_solusi_ideal_positif)-1) as $index) {
+        foreach (range(0, count($data_solusi_ideal_positif) - 1) as $index) {
             $result_distance[$index] = $data_solusi_ideal_positif[$index] + $data_solusi_ideal_negatif[$index];
         }
 
@@ -348,7 +363,7 @@ class SmartTopsisService
         }
 
         // sort desc by nilai_v
-        usort($result_ranking, function($a, $b) {
+        usort($result_ranking, function ($a, $b) {
             return $a['nilai_v'] < $b['nilai_v'];
         });
 

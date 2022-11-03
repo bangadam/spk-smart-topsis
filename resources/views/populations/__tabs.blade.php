@@ -4,7 +4,8 @@
         <div class="card">
             <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Data Penduduk</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Data Penduduk</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Keadaan Penduduk</a></li>
                 </ul>
             </div><!-- /.card-header -->

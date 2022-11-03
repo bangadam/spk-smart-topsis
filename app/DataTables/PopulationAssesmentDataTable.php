@@ -27,9 +27,16 @@ class PopulationAssesmentDataTable extends DataTable
      * @param \App\Models\PopulationAssesment $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(PopulationAssesment $model)
+    public function query($population_id = null, PopulationAssesment $model)
     {
-        return $model->newQuery();
+        if (request()->has('population_id')) {
+            $population_id = request()->get('population_id');
+            $model = $model->newQuery()->where('population_id', $population_id);
+        } else {
+            $model = $model->newQuery();
+        }
+
+        return $model->orderBy('date', 'desc');
     }
 
     /**
@@ -48,10 +55,6 @@ class PopulationAssesmentDataTable extends DataTable
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
-                    ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
                     ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
                 ],
             ]);
@@ -65,9 +68,8 @@ class PopulationAssesmentDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'sub_criteria_id',
-            'population_id',
-            'value'
+            'date' => ['name' => 'date', 'data' => 'date', 'title' => 'Tanggal'],
+            'period_id' => ['name' => 'period_id', 'data' => 'period_id', 'title' => 'Periode'],
         ];
     }
 

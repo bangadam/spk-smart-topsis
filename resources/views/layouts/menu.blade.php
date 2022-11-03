@@ -1,6 +1,6 @@
 <li class="nav-item">
     <a href="{{ route('dashboards.index') }}" class="nav-link {{ Request::is('dashboards*') ? 'active' : '' }}">
-        <i class="far fa-chart-pie nav-icon"></i>
+        <i class="far fa-circle nav-icon"></i>
         <p>Dashboard</p>
     </a>
 </li>
@@ -8,9 +8,9 @@
 @if(auth()->user()->hasRole('admin'))
 <li class="nav-item">
     <a href="#" class="nav-link">
-    <i class="nav-icon far fa-database"></i>
+        <i class="nav-icon far fa-database"></i>
         <p>
-        Data Master
+            Data Master
             <i class="fas fa-angle-left right"></i>
         </p>
     </a>
@@ -22,14 +22,14 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('subCriterias.index') }}" class="nav-link {{ Request::is('subCriterias*') ? 'active' : '' }}">
+            <a href="{{ route('subCriterias.index') }}"
+                class="nav-link {{ Request::is('subCriterias*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Sub Kriteria</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('periods.index') }}"
-            class="nav-link {{ Request::is('periods*') ? 'active' : '' }}">
+            <a href="{{ route('periods.index') }}" class="nav-link {{ Request::is('periods*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Data Periode</p>
             </a>
@@ -39,7 +39,7 @@
 
 <li class="nav-item">
     <a href="{{ route('dss.index') }}" class="nav-link {{ Request::is('dss*') ? 'active' : '' }}">
-        <i class="far fa-laptop nav-icon"></i>
+        <i class="far fa-circle nav-icon"></i>
         <p>Proses Pemilihan</p>
     </a>
 </li>
@@ -48,7 +48,7 @@
 @if(auth()->user()->hasRole(['admin', 'surveyor']))
 <li class="nav-item">
     <a href="{{ route('populations.index') }}" class="nav-link {{ Request::is('populations*') ? 'active' : '' }}">
-        <i class="far fa-users nav-icon"></i>
+        <i class="far fa-user nav-icon"></i>
         <p>Penduduk</p>
     </a>
 </li>
@@ -57,7 +57,7 @@
 @if(auth()->user()->hasRole(['receiver']))
 <li class="nav-item">
     <a href="{{ route('riwayat-data.index') }}" class="nav-link {{ Request::is('riwayat-data*') ? 'active' : '' }}">
-        <i class="far fa-users nav-icon"></i>
+        <i class="far fa-circle nav-icon"></i>
         <p>Riwayat Data</p>
     </a>
 </li>

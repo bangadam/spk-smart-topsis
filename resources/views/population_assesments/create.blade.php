@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1>Edit Population</h1>
+                <h1>Tambah Penilaian</h1>
             </div>
         </div>
     </div>
@@ -17,17 +17,19 @@
 
     <div class="card">
 
-        {!! Form::model($population, ['route' => ['populations.update', $population->id], 'method' => 'patch']) !!}
+        {!! Form::open(['route' => 'populationAssesments.store']) !!}
 
         <div class="card-body">
+
             <div class="row">
-                @include('populations.__fields')
+                @include('population_assesments.fields')
             </div>
+
         </div>
 
         <div class="card-footer">
             {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-            <a href="{{ route('populations.index') }}" class="btn btn-default">Cancel</a>
+            <a href="{{ route('populationAssesments.index') }}" class="btn btn-default">Cancel</a>
         </div>
 
         {!! Form::close() !!}

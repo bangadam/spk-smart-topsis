@@ -18,32 +18,32 @@ class CriteriaSeeder extends Seeder
             [
                 'code' => 'C1',
                 'name' => 'Pekerjaan',
-                'weight' => 25,
-                'type' => 'benefit'
+                'weight' => 4,
+                'type' => 'cost'
             ],
             [
                 'code' => 'C2',
                 'name' => 'Penghasilan',
-                'weight' => 20,
-                'type' => 'benefit'
+                'weight' => 5,
+                'type' => 'cost'
             ],
             [
                 'code' => 'C3',
                 'name' => 'Usia',
-                'weight' => 10,
+                'weight' => 3,
                 'type' => 'benefit'
             ],
             [
                 'code' => 'C4',
                 'name' => 'Tanggungan',
-                'weight' => 15,
+                'weight' => 3,
                 'type' => 'benefit'
             ],
             [
                 'code' => 'C5',
-                'name' => 'Terjangkit Covid 19',
-                'weight' => 30,
-                'type' => 'benefit'
+                'name' => 'Kesehatan',
+                'weight' => 4,
+                'type' => 'cost'
             ],
         ];
 

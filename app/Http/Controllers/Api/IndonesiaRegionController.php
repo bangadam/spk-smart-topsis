@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class IndonesiaRegionController extends Controller
 {
-    public function getProvinces(Request $request) {
+    public function getProvinces(Request $request)
+    {
         $provinces = \Indonesia::allProvinces()->pluck('name', 'id');
         return response()->json($provinces);
     }
@@ -31,5 +32,12 @@ class IndonesiaRegionController extends Controller
         $villages = \Indonesia::findDistrict($district_id)->villages()->pluck('name', 'id');
 
         return $this->success($villages);
+    }
+
+    public function getVillage($id)
+    {
+        $village = \Indonesia::findVillage($id, ['district.city.province'])->toArray();
+
+        return $this->success($village);
     }
 }

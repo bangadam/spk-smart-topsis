@@ -25,4 +25,6 @@ Route::group(['prefix' => 'indonesia'], function () {
     Route::get('/cities/{province_id}', [IndonesiaRegionController::class, 'getCities'])->name('api.indonesia.cities');
     Route::get('/districts/{city_id}', [IndonesiaRegionController::class, 'getDistricts'])->name('api.indonesia.districts');
     Route::get('/villages/{district_id}', [IndonesiaRegionController::class, 'getVillages'])->name('api.indonesia.villages');
+
+    Route::get('/village/{id}', [IndonesiaRegionController::class, 'getVillage'])->name('api.indonesia.village');
 });

@@ -10,7 +10,10 @@
                 </h3>
             </div>
             <div class="card-body">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur, quaerat at temporibus, fugit labore ipsum minus atque dicta placeat perferendis incidunt voluptatibus, amet accusantium eveniet nostrum fuga adipisci maiores voluptate.</p>
+                <p>Selamat datang <b>{{auth()->user()->full_name}}</b> di sistem informasi penyaluran bantuan sosial
+                    tunai
+                    COVID-19
+                    Dinas Sosial Kota Malang</p>
             </div>
         </div>
     </div>

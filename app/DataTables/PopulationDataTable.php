@@ -55,10 +55,6 @@ class PopulationDataTable extends DataTable
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
-                    ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
-                    ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
                     ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
                 ],
             ]);
@@ -73,9 +69,9 @@ class PopulationDataTable extends DataTable
     {
         return [
             'card_id_number' => ['title' => 'Nomor KTP'],
+            'family_card_id' => ['title' => "Nomor KK"],
             'name'          => ['title' => 'Nama'],
-            'phone_number' => ['title' => 'Nomor Telepon'],
-            'gender' => ['title' => 'Jenis Kelamin'],
+            'address' => ['title' => 'Alamat'],
         ];
     }
 

@@ -74,7 +74,7 @@ class Population extends Model
      * @var array
      */
     public static $rules = [
-        'card_id_number' => 'required|unique:populations',
+        'card_id_number' => 'required',
         'family_card_id' => 'required',
         'name' => 'required',
         'phone_number' => 'required',

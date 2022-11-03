@@ -13,12 +13,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
 // Home
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['prefix' => 'backoffice'], function() {
+Route::group(['prefix' => 'backoffice'], function () {
     Route::resource('dashboards', App\Http\Controllers\DashboardController::class);
 
     /** Master */
@@ -28,6 +29,7 @@ Route::group(['prefix' => 'backoffice'], function() {
     Route::resource('subCriterias', App\Http\Controllers\SubCriteriaController::class);
     Route::resource('populations', App\Http\Controllers\PopulationController::class);
     Route::post('/populations/import', [App\Http\Controllers\PopulationController::class, 'import'])->name('populations.import');
+    Route::get('/populations/duplicate/{id}', [App\Http\Controllers\PopulationController::class, 'duplicate'])->name('populations.duplicate');
 
     /** Dss */
     Route::get('/dss/next', [DssController::class, 'next'])->name('dss.next');
@@ -37,7 +39,7 @@ Route::group(['prefix' => 'backoffice'], function() {
     Route::resource('profiles', App\Http\Controllers\ProfileController::class);
 
     /** Riwayat Penerimaan */
-    Route::group(['prefix' => 'riwayat-data', 'as' => 'riwayat-data.'], function() {
+    Route::group(['prefix' => 'riwayat-data', 'as' => 'riwayat-data.'], function () {
         Route::get('/', [App\Http\Controllers\RiwayatDataController::class, 'index'])->name('index');
     });
 });
@@ -45,6 +47,6 @@ Route::group(['prefix' => 'backoffice'], function() {
 Route::resource('periods', App\Http\Controllers\PeriodController::class);
 
 // Check Receiver
-Route::group(['prefix' => 'check-receiver'], function() {
+Route::group(['prefix' => 'check-receiver'], function () {
     Route::post('/bantuan', [App\Http\Controllers\CheckReceiverController::class, 'bantuan'])->name('check-receiver.bantuan');
 });

@@ -16,13 +16,13 @@ class PeriodSeeder extends Seeder
     {
         $faker = \Faker\Factory::create('id_ID');
 
-        foreach (range(1, 10) as $key => $value) {
+        foreach (range(1, 3) as $key => $value) {
             Period::create([
                 'title' => '2022/2023 - Gelombang ' . $value,
                 'quota' => $faker->numberBetween(75, 75),
-                'start_date' => $faker->dateTimeBetween('-1 years', '+1 years'),
-                'end_date' => $faker->dateTimeBetween('-1 years', '+1 years'),
-                'status' => $value == 10 ? 'ongoing' : 'closed',
+                'start_date' => $faker->dateTimeBetween(now(), '+5 day'),
+                'end_date' => $faker->dateTimeBetween('1 month', '+1 month'),
+                'status' => $value == 3 ? 'ongoing' : 'closed',
             ]);
         }
     }

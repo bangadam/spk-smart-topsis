@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PopulationAssesmentDataTable;
-use App\Http\Requests;
 use App\Http\Requests\CreatePopulationAssesmentRequest;
 use App\Http\Requests\UpdatePopulationAssesmentRequest;
 use App\Repositories\PopulationAssesmentRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Period;
+use App\Models\PopulationAssesment;
+use Illuminate\Http\Request;
 use Response;
 
 class PopulationAssesmentController extends AppBaseController
@@ -28,7 +30,7 @@ class PopulationAssesmentController extends AppBaseController
      *
      * @return Response
      */
-    public function index(PopulationAssesmentDataTable $populationAssesmentDataTable)
+    public function index(Request $request, PopulationAssesmentDataTable $populationAssesmentDataTable)
     {
         return $populationAssesmentDataTable->render('population_assesments.index');
     }
@@ -38,9 +40,11 @@ class PopulationAssesmentController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('population_assesments.create');
+        $data['periods'] = Period::whereStatus("ongoing")->pluck('title', 'id');
+
+        return view('population_assesments.create', $data);
     }
 
     /**
@@ -70,7 +74,7 @@ class PopulationAssesmentController extends AppBaseController
      */
     public function show($id)
     {
-        $populationAssesment = $this->populationAssesmentRepository->find($id);
+        $populationAssesment = $this->populationAssesmentRepository->find($id)->load('populationAssesmentDetail');
 
         if (empty($populationAssesment)) {
             Flash::error('Population Assesment not found');

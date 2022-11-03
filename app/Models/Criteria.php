@@ -59,7 +59,7 @@ class Criteria extends Model
     ];
 
     // create criteria form generator
-    public static function criteriaFormGenerator()
+    public static function criteriaFormGenerator($data = null)
     {
         $html = '';
         $criterias = Criteria::all();
@@ -71,8 +71,17 @@ class Criteria extends Model
             $html .= '<option disabled selected>Pilih Kondisi ' . $criteria->name . '</option>';
 
             // append sub criteria
-            foreach ($criteria->subCriteria as $sub_criteria) {
-                $html .= '<option value="' . $sub_criteria->weight . '">' . $sub_criteria->name . '</option>';
+            foreach ($criteria->subCriteria as $key => $sub_criteria) {
+                // if data is not null, then check if the sub criteria is selected
+                if ($data != null) {
+                    $detail = $data->populationAssesmentDetail;
+                    foreach ($detail as $key => $value) {
+                        if ($value->sub_criteria_id == $sub_criteria->id) {
+                            $html .= '<option value="' . $sub_criteria->id . '" selected>' . $sub_criteria->name . '</option>';
+                        }
+                    }
+                }
+                $html .= '<option value="' . $sub_criteria->code . '">' . $sub_criteria->name . '</option>';
             }
 
             $html .= '</select>';
@@ -93,7 +102,7 @@ class Criteria extends Model
     {
         parent::boot();
 
-        self::creating(function($model){
+        self::creating(function ($model) {
             $last = self::count();
             $model->code = 'C' . ($last + 1);
         });

@@ -44,20 +44,21 @@
 <!-- Village Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('province_id', 'Pilih Provinsi:') !!}
-    {!! Form::select('province_id', $provinces, null, ['class' => 'form-control custom-select', 'placeholder' => 'Pilih Provinsi']) !!}
+    {!! Form::select('province_id', $provinces, null, ['class' => 'form-control custom-select', 'placeholder' => 'Pilih
+    Provinsi']) !!}
 </div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('city_id', 'Pilih Kota/Kabupaten:') !!}
-    {!! Form::select('city_id', [], null, ['class' => 'form-control custom-select']) !!}
+    {!! Form::select('city_id', $cities ?? [], null, ['class' => 'form-control custom-select']) !!}
 </div>
 <div class="form-group col-sm-6">
     {!! Form::label('district_id', 'Pilih Kecamatan:') !!}
-    {!! Form::select('district_id', [], null, ['class' => 'form-control custom-select']) !!}
+    {!! Form::select('district_id', $districts ?? [], null, ['class' => 'form-control custom-select']) !!}
 </div>
 <div class="form-group col-sm-6">
     {!! Form::label('village_id', 'Pilih Desa:') !!}
-    {!! Form::select('village_id', [], null, ['class' => 'form-control custom-select']) !!}
+    {!! Form::select('village_id', $villages ?? [], null, ['class' => 'form-control custom-select']) !!}
 </div>
 
 <!-- Zip Code Field -->
@@ -68,8 +69,40 @@
 
 
 @push('page_scripts')
-    <script type="text/javascript">
-        // on change province
+@if(Route::currentRouteName() == 'populations.edit')
+<script type="text/javascript">
+    $(document).ready(function() {
+        // set default province, city, district, village
+
+        // fetch village
+        $.ajax({
+            url: "{{ route('api.indonesia.village', $population->village_id) }}",
+            type: "GET",
+            success: function(response) {
+                const village = response.data;
+                const district_id = village.district.id;
+                const city_id = village.district.city.id;
+                const province_id = village.district.city.province.id;
+
+                // set default province
+                $('select[name="province_id"]').val(province_id).trigger('change');
+
+                // set default city
+                $('select[name="city_id"]').val(city_id).trigger('change');
+
+                // set default district
+                $('select[name="district_id"]').val(district_id).trigger('change');
+
+                // set default village
+                $('select[name="village_id"]').val(village.id).trigger('change');
+            }
+        });
+    });
+</script>
+@endif
+
+<script type="text/javascript">
+    // on change province
         $('#province_id').on('change', function() {
             var province_id = $(this).val();
             if(province_id) {
@@ -143,5 +176,5 @@
             useCurrent: true,
             sideBySide: true
         })
-    </script>
+</script>
 @endpush

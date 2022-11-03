@@ -49,6 +49,7 @@ class DssController extends Controller
         $data['total_utility'] = $this->smartTopsisService->getTotalUtility($data['utility']);
         $data['result_normalized_root'] = $this->smartTopsisService->getResultNormalizedRoot($data['utility'], $data['total_utility']);
         $data['result_normalized_weight'] = $this->smartTopsisService->getResultNormalizedWeight($data['result_normalized_root'], $data['normalized_weight_criteria']);
+        // dd($data['result_normalized_weight']);
         $data['result_solution'] = $this->smartTopsisService->getResultSolution($data['result_normalized_weight']);
         $data['result_distance'] = $this->smartTopsisService->getResultDistance($data['result_solution'], $data['result_normalized_weight']);
         $data['result_ranking'] = $this->smartTopsisService->getResultRanking($data['result_distance'], $data['dataset'], $request->period_id);
@@ -89,8 +90,10 @@ class DssController extends Controller
         }
     }
 
-    public function show($id) {
-        $data['population_assesments'] = PopulationAssesment::where('period_id',$id)->get();
+    public function show($id)
+    {
+        $model = new PopulationAssesment;
+        $data['population_assesments'] = $model->getRankingList($id);
         return view('dss.show', $data);
     }
 }

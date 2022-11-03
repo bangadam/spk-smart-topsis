@@ -7,6 +7,7 @@ use App\Models\Period;
 use App\Models\Population;
 use App\Models\SubCriteria;
 use App\Models\User;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -23,30 +24,38 @@ class PopulationAssesmentImport implements ToCollection, WithHeadingRow, WithChu
 
 
     /**
-    * @param Collection $collection
-    */
+     * @param Collection $collection
+     */
     public function collection(Collection $collection)
     {
         try {
             DB::beginTransaction();
 
             foreach ($collection as $key => $value) {
-                $user = $this->savePopulation($value);
-                $this->savePopulationAssesment($user, $value);
+                // find population by nik
+                $population = Population::where('card_id_number', $value['nik'])->first();
+
+                if ($population == null) {
+                    $user = $this->savePopulation($value);
+                    $population = Population::where('user_id', $user->id)->first();
+                }
+
+                $this->savePopulationAssesment($population, $value);
             }
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
-            throw $th;
         }
     }
 
-    private function savePopulationAssesment($user, $value)
+    private function savePopulationAssesment($population, $value)
     {
-        $population = Population::where('user_id', $user->id)->first();
-
         $last_periode = Period::orderBy('id', 'desc')->where('status', 'ongoing')->first();
+
+        if (empty($last_periode)) {
+            throw new Exception("Periode belum dibuat");
+        }
 
         $populationAssesmnet = $population->population_assesments()->create([
             'date' => now(),
@@ -65,12 +74,55 @@ class PopulationAssesmentImport implements ToCollection, WithHeadingRow, WithChu
             } elseif ($value_id == 4) {
                 $person_value = $value['jumlah_tanggungan'];
             } elseif ($value_id == 5) {
-                $person_value = $value['terjangkit_covid_19'];
+                $person_value = $value['kesehatan'];
             }
 
-            $sub_criteria = SubCriteria::where('criteria_id', $value_id)
-                ->whereRaw('LOWER(name) = ?', [strtolower($person_value)])
-                ->first();
+            $sub_criteria = SubCriteria::where('criteria_id', $value_id);
+
+            if ($value_id == 1) {
+                $sub_criteria = $sub_criteria->where('name', $person_value);
+            } elseif ($value_id == 2) {
+                $sub_id = null;
+                foreach ($sub_criteria->get() as $key => $sub) {
+                    if ($person_value >= $sub->min && $sub->max == null) {
+                        $sub_id = $sub->id;
+                        break;
+                    } else if ($person_value < $sub->max && $sub->min == null) {
+                        $sub_id = $sub->id;
+                        break;
+                    } else if ($person_value >= $sub->min && $person_value <= $sub->max) {
+                        $sub_id = $sub->id;
+                        break;
+                    }
+                }
+                $sub_criteria = $sub_criteria->where('id', $sub_id);
+            } elseif ($value_id == 3) {
+                $sub_id = null;
+                foreach ($sub_criteria->get() as $key => $sub) {
+                    if ($person_value >= $sub->min && $sub->max == null) {
+                        $sub_id = $sub->id;
+                        break;
+                    } else if ($person_value < $sub->max && $sub->min == null) {
+                        $sub_id = $sub->id;
+                        break;
+                    } else if ($person_value >= $sub->min && $person_value <= $sub->max) {
+                        $sub_id = $sub->id;
+                        break;
+                    }
+                }
+
+                $sub_criteria = $sub_criteria->where('id', $sub_id);
+            } elseif ($value_id == 4) {
+                if ($person_value >= 5) {
+                    $sub_criteria = $sub_criteria->whereCode("SC20");
+                } else {
+                    $sub_criteria = $sub_criteria->where('name', $person_value);
+                }
+            } elseif ($value_id == 5) {
+                $sub_criteria = $sub_criteria->where('name', $person_value);
+            }
+
+            $sub_criteria = $sub_criteria->first();
 
             if (!empty($sub_criteria)) {
                 $populationAssesmnet->populationAssesmentDetail()->create([
@@ -78,12 +130,13 @@ class PopulationAssesmentImport implements ToCollection, WithHeadingRow, WithChu
                     'value' => $sub_criteria->weight,
                 ]);
             } else {
-                dd($value, $value_id, $person_value, $sub_criteria);
+                dd($value_id, $person_value, "Sub Criteria Not Found");
             }
         }
     }
 
-    private function savePopulation($value): User {
+    private function savePopulation($value): User
+    {
         $user = new User();
         $user->name = $value['nama_penerima_bantuan'];
         $user->email = $value['nik'];
@@ -115,7 +168,8 @@ class PopulationAssesmentImport implements ToCollection, WithHeadingRow, WithChu
         return $user;
     }
 
-    private function searchFullAddress($value): array {
+    private function searchFullAddress($value): array
+    {
         $data = [
             'village_id' => null,
             'zip_code' => null,

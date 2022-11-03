@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Population;
+use App\Models\PopulationAssesment;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -22,6 +23,8 @@ class DashboardController extends Controller
         } else if (auth()->user()->hasRole('surveyor')) {
             $data['total_population'] = Population::where('created_by', auth()->user()->id)->count();
         }
+
+        $data['total_received'] = PopulationAssesment::getTotalReceived();
 
         return view('dashboard.index', $data);
     }

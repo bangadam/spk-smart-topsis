@@ -13,6 +13,7 @@ use App\Imports\PopulationAssesmentImport;
 use App\Models\Criteria;
 use App\Models\Population;
 use App\Models\User;
+use App\Repositories\PopulationAssesmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,10 +23,12 @@ class PopulationController extends AppBaseController
 {
     /** @var PopulationRepository $populationRepository*/
     private $populationRepository;
+    private $populationAssesmentRepository;
 
-    public function __construct(PopulationRepository $populationRepo)
+    public function __construct(PopulationRepository $populationRepo, PopulationAssesmentRepository $populationAssesmentRepo)
     {
         $this->populationRepository = $populationRepo;
+        $this->populationAssesmentRepository = $populationAssesmentRepo;
     }
 
     /**
@@ -62,7 +65,7 @@ class PopulationController extends AppBaseController
      */
     public function store(CreatePopulationRequest $request)
     {
-       try {
+        try {
             DB::beginTransaction();
 
             $input = $request->all();
@@ -88,7 +91,7 @@ class PopulationController extends AppBaseController
                 ++$key;
                 $population_assesment_detail = $population_assesment->populationAssesmentDetail()->create([
                     'criteria_id' => $criteria->id,
-                    'value' => $input['C'.$key],
+                    'value' => $input['C' . $key],
                     'created_by' => auth()->user()->id,
                 ]);
             }
@@ -97,11 +100,11 @@ class PopulationController extends AppBaseController
             DB::commit();
 
             return redirect(route('populations.index'));
-       } catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             DB::rollback();
             Flash::error('Gagal menyimpan data');
             return redirect()->back()->withInput();
-       }
+        }
     }
 
     /**
@@ -133,13 +136,19 @@ class PopulationController extends AppBaseController
      */
     public function edit($id)
     {
-        $population = $this->populationRepository->find($id);
+        $population = $this->populationRepository->find($id)->load('population_assesments.populationAssesmentDetail');
 
         if (empty($population)) {
             Flash::error('Population not found');
 
             return redirect(route('populations.index'));
         }
+
+        $data['gender'] = Population::getGenderList();
+        $data['provinces'] = \Indonesia::allProvinces()->pluck('name', 'id')->toArray();
+        $data['cities'] = \Indonesia::allCities()->pluck('name', 'id')->toArray();
+        $data['districts'] = \Indonesia::allDistricts()->pluck('name', 'id')->toArray();
+        $data['villages'] = \Indonesia::allVillages()->pluck('name', 'id')->toArray();
 
         $data['population'] = $population;
         $data['gender'] = Population::getGenderList();
@@ -212,6 +221,19 @@ class PopulationController extends AppBaseController
         } catch (\Throwable $th) {
             dd($th);
             Flash::error('Gagal mengimport data');
+            return redirect()->back();
+        }
+    }
+
+    public function duplicate($id)
+    {
+        try {
+            $result = $this->populationAssesmentRepository->duplicate($id);
+            Flash::success("Berhasil menduplikasi data $result->name");
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            dd($th);
+            Flash::error('Gagal menyimpan data');
             return redirect()->back();
         }
     }

@@ -18,6 +18,8 @@ class CreateSubCriteriasTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->string('name');
+            $table->integer('min')->nullable()->default(null);
+            $table->integer('max')->nullable()->default(null);
             $table->integer('weight');
             $table->biginteger('criteria_id')->unsigned();
             $table->timestamps();
